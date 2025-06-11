@@ -1,35 +1,67 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import React, { useEffect } from "react";
+import { useFutoshikiStore } from "./store/futoshikiStore";
+import { solvePuzzle } from "./utils/puzzleSolver";
+import Header from "./components/Header";
+import ControlPanel from "./components/ControlPanel";
+import PuzzleGrid from "./components/PuzzleGrid";
+import Sidebar from "./components/Sidebar";
 
-function App() {
-  const [count, setCount] = useState(0);
+const App: React.FC = () => {
+  const {
+    gridSize,
+    grid,
+    constraints,
+    solverType,
+    setCurrentStep,
+    setIsAnimating,
+    setSolution,
+    setSolutionSteps,
+    initializeGrid,
+  } = useFutoshikiStore();
+
+  // Initialize grid when component mounts
+  useEffect(() => {
+    initializeGrid(gridSize);
+  }, []);
+
+  const handleSolvePuzzle = async () => {
+    try {
+      setCurrentStep("solving");
+      setIsAnimating(true);
+
+      const result = await solvePuzzle({
+        grid,
+        constraints,
+        gridSize,
+        solverType,
+      });
+
+      setSolution(result.solution);
+      setSolutionSteps(result.steps);
+      setCurrentStep("solved");
+    } catch (error) {
+      console.error("Failed to solve puzzle:", error);
+      setCurrentStep("setup");
+    } finally {
+      setIsAnimating(false);
+    }
+  };
 
   return (
-    <main className='space-y-4'>
-      <div className='flex items-center justify-around'>
-        <a href='https://vite.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
+    <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative'>
+      <div className='container mx-auto px-2 md:px-4 py-8'>
+        <Header />
+        <ControlPanel onSolvePuzzle={handleSolvePuzzle} />
+
+        {/* Main Content */}
+        <div className='max-w-6xl mx-auto grid lg:grid-cols-3 gap-8'>
+          <PuzzleGrid />
+          <Sidebar />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
-    </main>
+    </div>
   );
-}
+};
 
 export default App;
