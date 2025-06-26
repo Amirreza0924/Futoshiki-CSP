@@ -22,8 +22,12 @@ export const solvePuzzle = async (
 ): Promise<SolvePuzzleResult> => {
   const { grid, constraints, gridSize, solverType } = params;
 
-  console.log("Solving with constraints:", constraints);
-  console.table(grid);
+  // POST API response structure
+  console.log("\x1b[34m%s\x1b[0m", "POST API response structure:");
+  console.log("\x1b[32m%s\x1b[0m", "Grid:", grid);
+  console.log("\x1b[32m%s\x1b[0m", "Constraints:", constraints);
+  console.log("\x1b[32m%s\x1b[0m", "Grid Size:", gridSize);
+  console.log("\x1b[32m%s\x1b[0m", "Solver Type:", solverType);
 
   // Mock API call - replace with actual FastAPI call
   // Simulate API delay
