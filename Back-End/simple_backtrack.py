@@ -1,4 +1,3 @@
-# simple_backtrack.py
 import time
 from utils import is_valid
 
@@ -106,11 +105,13 @@ if __name__ == "__main__":
 
     solver = SimpleSolver(grid, constraints, grid_size)
     result = solver.solve()
-    print("Solution:", result["solution"])
+    print("Solution:")
+    for row in result["solution"]:
+            print("   ", row)
     print("="* 40)
     print("Backtracks:", result["backtracks"])
     print("="* 40)
-    print("Time taken:", result["time_taken"])
+    print("Time taken:", int(result["time_taken"] * (10**6)), "microseconds")
     print("="* 40)
     print("Steps:")
     for idx, step in enumerate(result["steps"], 1):
