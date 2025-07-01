@@ -4,6 +4,8 @@ from typing import List, Optional
 import traceback
 import json
 import uvicorn
+from optimized_backtrack import OptimizedSolver
+from simple_backtrack import SimpleSolver
 
 class CellPosition(BaseModel):
     row: int
@@ -21,21 +23,38 @@ class problem(BaseModel):
     GridSize: int
     SolverType: str  # 'optimized' or 'basic'
 
+
 app = FastAPI()
 
 @app.get("/")
 async def read_root():
-    return {"message": "Welcome to the Problem Solver API"}
+    return {"message": "Welcome to Futoshiki Problem Solver API"}
 
 @app.post("/solve")
 async def solve_problem(problem_data: problem):
     try:
-        # Here you would implement the logic to solve the problem based on the provided data.
-        # For now, we will just return the received data as a placeholder.
+        
+        solver_type = problem_data.SolverType
+
+        if solver_type == 'optimized': # Optimized Solver
+            solver = OptimizedSolver(
+                grid=problem_data.Grid,
+                constraints=problem_data.Constraints,
+                grid_size=problem_data.GridSize
+            )
+            solution = solver.solve()
+
+        else: # Basic Solver (Basic Backtracking Solver)
+            solver = SimpleSolver(
+                grid=problem_data.Grid,
+                constraints=problem_data.Constraints,
+                grid_size=problem_data.GridSize
+            )
+            solution = solver.solve()
 
         return {
-            "message": "Problem received",
-            "problem_data": problem_data
+            "message": "Solotion Khedmat Shoma!",
+            "solution": solution
         }
     except Exception as e:
         return {
