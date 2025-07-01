@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+@layer components {
+  .constraint-btn {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #e5e7eb;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 12px;
+    font-weight: bold;
+
+    &:hover {
+      border-color: #6366f1;
+      background: #eef2ff;
+    }
+
+    &.active {
+      border-color: #6366f1;
+      background: #6366f1;
+      color: white;
+    }
+
+    &.horizontal {
+      margin: 0 4px;
+    }
+
+    &.vertical {
+      margin: 4px 0;
+    }
+
+    .constraint-symbol {
+      transform: scale(1.2);
+    }
+  }
+
+  .puzzle-container {
+    padding: 10px;
+    background: #f8fafc;
+    width: fit-content;
+    margin: auto;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Grid Layout Fixes */
+  .grid-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .cell-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .constraint-container {
+    &.horizontal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 48px; /* Match input height */
+      margin-top: 0;
+    }
+
+    &.vertical {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px; /* Match input width */
+      height: 32px;
+      margin: 4px 0;
+      transform: rotate(90deg);
+      transform-origin: center;
+    }
+  }
+
+  /* Enhanced Select Styling with Modern CSS Nesting */
+  .custom-select {
+    position: relative;
+    display: inline-block;
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 40px 12px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      min-width: 140px;
+
+      &:hover {
+        border-color: #c7d2fe;
+        background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+        box-shadow: 0 4px 8px rgba(99, 102, 241, 0.1);
+        transform: translateY(-1px);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #6366f1;
+        background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1),
+          0 4px 12px rgba(99, 102, 241, 0.15);
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        background: #f3f4f6;
+        color: #9ca3af;
+        cursor: not-allowed;
+        opacity: 0.6;
+        transform: none;
+      }
+
+      /* Enhanced Option Styling */
+      option {
+        background: white;
+        color: #374151;
+        padding: 12px 16px;
+        font-weight: 500;
+        border-radius: 8px;
+        margin: 2px 0;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+          color: #6366f1;
+        }
+
+        &:checked,
+        &:focus {
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          color: purple;
+          font-weight: 600;
+        }
+
+        &:disabled {
+          background: #f9fafb;
+          color: #9ca3af;
+        }
+      }
+    }
+
+    /* Custom Dropdown Arrow */
+    &::after {
+      content: "";
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 8px solid #6b7280;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    &:hover::after {
+      border-top-color: #6366f1;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    /* Arrow animation on focus */
+    &:has(select:focus)::after {
+      border-top-color: #6366f1;
+      transform: translateY(-50%) scale(1.1) rotate(180deg);
+    }
+  }
+}

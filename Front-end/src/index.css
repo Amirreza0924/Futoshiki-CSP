@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@layer base {
+  input {
+    @apply appearance-none focus:outline-none;
+  }
+  select {
+    @apply appearance-none focus:outline-none;
+  }
+}
