@@ -62,6 +62,42 @@ async def solve_problem(problem_data: problem):
             "error": str(e),
             "traceback": traceback.format_exc()
         }
+    
+@app.post("/solve-compared")
+async def solve_problem_comparison(problem_data: problem):
+    try:
+
+        optimized_solver = OptimizedSolver(
+            grid=problem_data.Grid,
+            constraints=problem_data.Constraints,
+            grid_size=problem_data.GridSize
+        )
+        optimized_solution = optimized_solver.solve()
+
+        simple_solver = SimpleSolver(
+            grid=problem_data.Grid,
+            constraints=problem_data.Constraints,
+            grid_size=problem_data.GridSize
+        )
+        simple_solution = simple_solver.solve()
+
+        return {
+            "message": "Moghayese Khedmat Shoma!",
+            "report": {
+                "optimized_final_solution": optimized_solution['solution'],
+                "simple_final_solution": simple_solution['solution'],
+                "optimized_time": optimized_solution['time_taken'],
+                "simple_time": simple_solution['time_taken'],
+                "optimized_backtracks": optimized_solution['backtracks'],
+                "simple_backtracks": simple_solution['backtracks'],
+            }
+        }
+    except Exception as e:
+        return {
+            "message": "An error occurred while processing the problem",
+            "error": str(e),
+            "traceback": traceback.format_exc()
+        }
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000)

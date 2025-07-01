@@ -51,18 +51,18 @@ class OptimizedSolver:
 
         # Check inequality constraints
         for const in self.constraints:
-            p1 = (const['position1']['row'], const['position1']['col'])
-            p2 = (const['position2']['row'], const['position2']['col'])
+            p1 = (const.position1.row, const.position1.col)
+            p2 = (const.position2.row, const.position2.col)
 
             if p1 == var and p2 in assignment:
-                if const['type'] == 'greater' and value <= assignment[p2]:
+                if const.type == 'greater' and value <= assignment[p2]:
                     return False
-                if const['type'] == 'less' and value >= assignment[p2]:
+                if const.type == 'less' and value >= assignment[p2]:
                     return False
             elif p2 == var and p1 in assignment:
-                if const['type'] == 'greater' and assignment[p1] <= value:
+                if const.type == 'greater' and assignment[p1] <= value:
                     return False
-                if const['type'] == 'less' and assignment[p1] >= value:
+                if const.type == 'less' and assignment[p1] >= value:
                     return False
         return True
 
@@ -146,13 +146,23 @@ class OptimizedSolver:
             return True
 
         var = self._select_unassigned_variable_mrv(assignment)
-        self.steps.append({"step": "Variable Selection (MRV)", "position": {"row": var[0], "col": var[1]}, "domain_size": len(self.domains[var]), "grid": [row[:] for row in self.grid]})
+        self.steps.append({
+            "step": "Variable Selection (MRV)",
+            "position": {"row": var[0], "col": var[1]},
+            "domain_size": len(self.domains[var]),
+            "grid": [row[:] for row in self.grid]
+        })
 
         ordered_values = self._order_domain_values_lcv(var, assignment)
 
         for value in ordered_values:
             if self._is_consistent(var, value, assignment):
-                self.steps.append({"step": "Value Selection (LCV)", "position": {"row": var[0], "col": var[1]}, "value": value, "grid": [row[:] for row in self.grid]})
+                self.steps.append({
+                    "step": "Value Selection (LCV)",
+                    "position": {"row": var[0], "col": var[1]},
+                    "value": value,
+                    "grid": [row[:] for row in self.grid]
+                })
                 
                 assignment[var] = value
                 self.grid[var[0]][var[1]] = value
@@ -176,7 +186,12 @@ class OptimizedSolver:
             del assignment[var]
             self.grid[var[0]][var[1]] = None
             self.backtrack_count += 1
-            self.steps.append({"step": "Backtrack", "position": {"row": var[0], "col": var[1]}, "backtrack_count": self.backtrack_count, "grid": [row[:] for row in self.grid]})
+            self.steps.append({
+                "step": "Backtrack",
+                "position": {"row": var[0], "col": var[1]},
+                "backtrack_count": self.backtrack_count,
+                "grid": [row[:] for row in self.grid]
+            })
 
         return False
     
@@ -227,4 +242,3 @@ if __name__ == "__main__":
         for row in step["grid"]:
             print("   ", row)
         print("-" * 30)
-    
