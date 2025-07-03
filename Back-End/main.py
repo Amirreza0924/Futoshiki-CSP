@@ -6,6 +6,7 @@ import json
 import uvicorn
 from optimized_backtrack import OptimizedSolver
 from simple_backtrack import SimpleSolver
+from fastapi.middleware.cors import CORSMiddleware
 
 class CellPosition(BaseModel):
     row: int
@@ -25,6 +26,23 @@ class problem(BaseModel):
 
 
 app = FastAPI()
+
+# origins = [
+#     "http://localhost",
+#     "http://localhost:5173"
+# ]
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def read_root():
