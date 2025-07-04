@@ -1,4 +1,3 @@
-# optimized_backtrack.py
 import time
 from collections import deque
 from utils import get_neighbors
@@ -29,7 +28,7 @@ class OptimizedSolver:
         # 1. Pre-processing with AC-2
         self.ac2_initial()
         
-        solution_found = self._backtrack()
+        solution_found = self._backtrack(assignment={})
         end_time = time.time()
 
         # Add final step to steps

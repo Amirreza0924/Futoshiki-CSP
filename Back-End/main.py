@@ -87,11 +87,14 @@ async def solve_problem(problem_data: problem):
             "solution": solution
         }
     except Exception as e:
-        return {
-            "message": "An error occurred while processing the problem",
-            "error": str(e),
-            "traceback": traceback.format_exc()
-        }
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "message": "An error occurred while processing the problem",
+                "error": str(e),
+                "traceback": traceback.format_exc()
+            }
+        )
     
 @app.post("/solve-compared")
 async def solve_problem_comparison(problem_data: problem):
@@ -123,11 +126,14 @@ async def solve_problem_comparison(problem_data: problem):
             }
         }
     except Exception as e:
-        return {
-            "message": "An error occurred while processing the problem",
-            "error": str(e),
-            "traceback": traceback.format_exc()
-        }
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "message": "An error occurred while processing the problem",
+                "error": str(e),
+                "traceback": traceback.format_exc()
+            }
+        )
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000)
