@@ -34,7 +34,10 @@ const PuzzleGrid: React.FC = () => {
 
   return (
     <div className='lg:col-span-2'>
-      <div className='bg-white rounded-2xl shadow-lg md:p-6 p-4 border border-gray-100'>
+      <div
+        id='puzzle-grid'
+        className='bg-white rounded-2xl shadow-lg md:p-6 p-4 border border-gray-100'
+      >
         <h2 className='text-xl font-semibold mb-4 flex items-center gap-2'>
           <Settings size={20} className='text-indigo-600' />
           Puzzle Setup
@@ -186,28 +189,27 @@ const PuzzleGrid: React.FC = () => {
             </div>
           ))}
         </div>
-
-        <motion.div
-          className='mt-4 text-sm text-gray-600'
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <p>
-            <strong>Instructions:</strong>
-          </p>
-          <ul className='list-disc list-inside space-y-1 mt-2'>
-            <li>Enter numbers 1-{gridSize} in cells (optional pre-fill)</li>
-            <li>
-              Click between cells to add inequality constraints (&gt;, &lt;)
-            </li>
-            <li>Click constraint buttons to cycle through options</li>
-            <li>
-              Each row and column must contain all numbers 1-{gridSize} exactly
-              once
-            </li>
-          </ul>
-        </motion.div>
+        {currentStep === "setup" && (
+          <motion.div
+            className='mt-4 text-sm text-gray-600'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, ease: "easeInOut" }}
+          >
+            <p>
+              <strong>Instructions:</strong>
+            </p>
+            <ul className='list-disc list-inside space-y-1 mt-2'>
+              <li>Enter numbers 1-{gridSize} in cells (optional pre-fill)</li>
+              <li>Click between cells to add inequality constraints</li>
+              <li>Click constraint buttons to cycle through options</li>
+              <li>
+                Each row and column must contain all numbers 1-{gridSize}{" "}
+                exactly once
+              </li>
+            </ul>
+          </motion.div>
+        )}
       </div>
     </div>
   );

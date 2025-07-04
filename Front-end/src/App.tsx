@@ -45,6 +45,10 @@ const App: React.FC = () => {
         }
       }
       setCurrentStep("solved");
+      document.getElementById("puzzle-grid")?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     } catch (error) {
       setCurrentStep("setup");
     } finally {
@@ -54,9 +58,9 @@ const App: React.FC = () => {
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative'>
-      <Toaster richColors />
+      <Toaster richColors position='top-center' />
 
-      <div className='container mx-auto px-2 md:px-4 py-8'>
+      <div className='container mx-auto px-2 md:px-4 py-8 pb-32 md:pb-8'>
         <Header />
         <ControlPanel onSolvePuzzle={handleSolvePuzzle} />
 
