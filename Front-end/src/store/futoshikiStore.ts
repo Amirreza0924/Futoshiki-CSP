@@ -8,14 +8,23 @@ export interface Constraint {
 }
 
 export interface SolutionStep {
-  stepType:
-    | "assignment"
-    | "backtrack"
-    | "constraint_propagation"
-    | "arc_consistency";
-  position?: { row: number; col: number };
+  step: string;
+  position: { row: number; col: number };
   value?: number;
-  description: string;
+  domain_size?: number;
+  grid: (number | null)[][];
+}
+
+export interface SolutionData {
+  solution: number[][];
+  backtracks: number;
+  time_taken: number;
+  steps: SolutionStep[];
+}
+
+export interface ApiResponse {
+  message: string;
+  solution: SolutionData;
 }
 
 export type CurrentStep = "setup" | "solving" | "solved";
@@ -29,7 +38,7 @@ interface FutoshikiState {
   solution: number[][] | null;
 
   // Solution state
-  solutionSteps: SolutionStep[];
+  solutionData: SolutionData | null;
   currentStepIndex: number;
 
   // UI state
@@ -56,7 +65,8 @@ interface FutoshikiState {
     col2: number
   ) => Constraint | undefined;
   setSolution: (solution: number[][]) => void;
-  setSolutionSteps: (steps: SolutionStep[]) => void;
+  setSolutionData: (data: SolutionData) => void;
+  setApiResponse: (response: ApiResponse) => void;
   setCurrentStep: (step: CurrentStep) => void;
   setIsAnimating: (animating: boolean) => void;
   setSolverType: (type: SolverType) => void;
@@ -71,7 +81,7 @@ export const useFutoshikiStore = create<FutoshikiState>((set, get) => ({
   grid: [],
   constraints: [],
   solution: null,
-  solutionSteps: [],
+  solutionData: null,
   currentStepIndex: 0,
   currentStep: "setup",
   isAnimating: false,
@@ -92,8 +102,8 @@ export const useFutoshikiStore = create<FutoshikiState>((set, get) => ({
       grid: newGrid,
       constraints: [],
       solution: null,
+      solutionData: null,
       currentStep: "setup",
-      solutionSteps: [],
       currentStepIndex: 0,
     });
   },
@@ -170,7 +180,18 @@ export const useFutoshikiStore = create<FutoshikiState>((set, get) => ({
   },
 
   setSolution: (solution: number[][]) => set({ solution }),
-  setSolutionSteps: (steps: SolutionStep[]) => set({ solutionSteps: steps }),
+  setSolutionData: (data: SolutionData) => {
+    set({ 
+      solutionData: data,
+      solution: data.solution
+    });
+  },
+  setApiResponse: (response: ApiResponse) => {
+    set({ 
+      solutionData: response.solution,
+      solution: response.solution.solution
+    });
+  },
   setCurrentStep: (step: CurrentStep) => set({ currentStep: step }),
   setIsAnimating: (animating: boolean) => set({ isAnimating: animating }),
   setSolverType: (type: SolverType) => set({ solverType: type }),

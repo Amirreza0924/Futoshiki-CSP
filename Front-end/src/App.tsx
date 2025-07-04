@@ -15,8 +15,8 @@ const App: React.FC = () => {
     solverType,
     setCurrentStep,
     setIsAnimating,
-    setSolution,
-    setSolutionSteps,
+    setApiResponse,
+    updateGridValue,
     initializeGrid,
   } = useFutoshikiStore();
 
@@ -37,8 +37,12 @@ const App: React.FC = () => {
         solverType,
       });
 
-      setSolution(result.solution);
-      setSolutionSteps(result.steps);
+      setApiResponse(result);
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          updateGridValue(i, j, result.solution.solution[i][j].toString());
+        }
+      }
       setCurrentStep("solved");
     } catch (error) {
       console.error("Failed to solve puzzle:", error);

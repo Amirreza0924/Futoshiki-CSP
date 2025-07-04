@@ -3,11 +3,11 @@ import { Zap } from "lucide-react";
 import { useFutoshikiStore } from "../store/futoshikiStore";
 
 const Statistics: React.FC = () => {
-  const { currentStep, solverType, solutionSteps } = useFutoshikiStore();
+  const { currentStep, solverType, solutionData } = useFutoshikiStore();
 
-  if (currentStep !== "solved") {
-    return null;
-  }
+  if (currentStep !== "solved") return null;
+
+  console.log(solutionData);
 
   return (
     <div className='bg-white rounded-2xl shadow-lg p-6 border border-gray-100'>
@@ -21,17 +21,23 @@ const Statistics: React.FC = () => {
           <span className='font-medium capitalize'>{solverType}</span>
         </div>
         <div className='flex justify-between'>
-          <span className='text-gray-600'>Backtracks:</span>
-          <span className='font-medium'>12</span>
+          <span className='text-gray-600'>Algorithm Steps:</span>
+          <span className='font-medium'>{solutionData?.steps.length || 0}</span>
         </div>
-        <div className='flex justify-between'>
-          <span className='text-gray-600'>Time:</span>
-          <span className='font-medium'>0.45s</span>
-        </div>
-        <div className='flex justify-between'>
-          <span className='text-gray-600'>Steps:</span>
-          <span className='font-medium'>{solutionSteps.length}</span>
-        </div>
+        {solutionData && (
+          <>
+            <div className='flex justify-between'>
+              <span className='text-gray-600'>Backtracks:</span>
+              <span className='font-medium'>{solutionData.backtracks}</span>
+            </div>
+            <div className='flex justify-between'>
+              <span className='text-gray-600'>Time Taken:</span>
+              <span className='font-medium'>
+                {solutionData.time_taken.toFixed(6)} ms
+              </span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

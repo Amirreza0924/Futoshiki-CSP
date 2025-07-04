@@ -1,5 +1,5 @@
 import React from "react";
-import { useFutoshikiStore, type Constraint } from "../store/futoshikiStore";
+import { useFutoshikiStore } from "../store/futoshikiStore";
 
 interface ConstraintButtonProps {
   row1: number;
