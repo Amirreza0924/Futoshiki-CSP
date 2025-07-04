@@ -86,6 +86,10 @@ async def solve_problem(problem_data: problem):
             "message": "Solotion Khedmat Shoma!",
             "solution": solution
         }
+    
+    except HTTPException as http_exc:
+        raise http_exc
+    
     except Exception as e:
         raise HTTPException(
             status_code=500,
