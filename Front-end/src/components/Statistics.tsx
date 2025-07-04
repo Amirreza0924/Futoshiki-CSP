@@ -1,7 +1,6 @@
 import React from "react";
 import { Zap } from "lucide-react";
 import { useFutoshikiStore } from "../store/futoshikiStore";
-import axios from "axios";
 import ReportModal from "./ReportModal";
 
 const Statistics: React.FC = () => {

@@ -36,8 +36,26 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ onSolvePuzzle }) => {
                 >
                   <option value={3}>3×3 Grid</option>
                   <option value={4}>4×4 Grid</option>
-                  <option value={5}>5×5 Grid</option>
-                  <option value={6}>6×6 Grid</option>
+                  <option className='hidden md:block' value={5}>
+                    5×5 Grid
+                  </option>
+                  <option className='hidden md:block' value={6}>
+                    6×6 Grid
+                  </option>
+                  <option className='hidden md:block' value={7}>
+                    7×7 Grid
+                  </option>
+                  <option className='hidden md:block' value={8}>
+                    8×8 Grid
+                  </option>
+
+                  <option
+                    className='text-xs text-gray-500 block md:hidden'
+                    disabled
+                    value=''
+                  >
+                    For bigger grids, use a desktop
+                  </option>
                 </select>
               </div>
             </div>
