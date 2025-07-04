@@ -125,7 +125,7 @@ const SolutionSteps: React.FC = () => {
     { value: 1000, label: "0.5x" },
     { value: 500, label: "1x" },
     { value: 250, label: "2x" },
-    { value: 100, label: "4x" },
+    { value: 125, label: "4x" },
     { value: 50, label: "10x" },
   ];
 
@@ -179,7 +179,7 @@ const SolutionSteps: React.FC = () => {
       <div className='flex items-center justify-center gap-3 mb-4'>
         <button
           onClick={handleReset}
-          className='p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50'
+          className='p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 cursor-pointer'
           title='Reset to beginning'
         >
           <RotateCcw size={16} />
@@ -209,7 +209,7 @@ const SolutionSteps: React.FC = () => {
 
             setIsPlaying(!isPlaying);
           }}
-          className='p-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition-colors'
+          className='p-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition-colors cursor-pointer'
           title={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? <Pause size={20} /> : <Play size={20} />}
@@ -217,7 +217,7 @@ const SolutionSteps: React.FC = () => {
 
         <button
           onClick={handleSkipToEnd}
-          className='p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors'
+          className='p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer'
           title='Skip to end'
         >
           <SkipForward size={16} />
@@ -232,7 +232,7 @@ const SolutionSteps: React.FC = () => {
             <button
               key={option.value}
               onClick={() => setPlaySpeed(option.value)}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors cursor-pointer ${
                 playSpeed === option.value
                   ? "bg-indigo-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"

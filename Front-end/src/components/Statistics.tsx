@@ -1,6 +1,8 @@
 import React from "react";
 import { Zap } from "lucide-react";
 import { useFutoshikiStore } from "../store/futoshikiStore";
+import axios from "axios";
+import ReportModal from "./ReportModal";
 
 const Statistics: React.FC = () => {
   const { currentStep, solverType, solutionData } = useFutoshikiStore();
@@ -36,6 +38,10 @@ const Statistics: React.FC = () => {
             </div>
           </>
         )}
+      </div>
+
+      <div className='flex justify-center mt-2'>
+        <ReportModal />
       </div>
     </div>
   );
