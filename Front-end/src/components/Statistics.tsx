@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import { Zap } from "lucide-react";
 import { useFutoshikiStore } from "../store/futoshikiStore";
 import ReportModal from "./ReportModal";
@@ -46,4 +46,4 @@ const Statistics: React.FC = () => {
   );
 };
 
-export default Statistics;
+export default memo(Statistics);

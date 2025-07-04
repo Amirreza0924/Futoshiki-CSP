@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useFutoshikiStore, useTimelineStore } from "../store";
 import { Pause, Play, SkipForward, RotateCcw } from "lucide-react";
@@ -338,4 +338,4 @@ const SolutionSteps: React.FC = () => {
   );
 };
 
-export default SolutionSteps;
+export default memo(SolutionSteps);

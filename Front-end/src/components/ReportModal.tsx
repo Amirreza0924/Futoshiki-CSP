@@ -6,7 +6,7 @@ import {
   ModalTrigger,
 } from "./UI/animated-modal";
 import { useFutoshikiStore } from "../store";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 interface Report {
   optimized_final_solution: number[][];
@@ -107,4 +107,4 @@ const ReportModal = () => {
   );
 };
 
-export default ReportModal;
+export default memo(ReportModal);

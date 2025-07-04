@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { RotateCcw, Brain } from "lucide-react";
 import { useFutoshikiStore } from "../store/futoshikiStore";
 import { useTimelineStore } from "../store";
@@ -116,4 +116,4 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ onSolvePuzzle }) => {
   );
 };
 
-export default ControlPanel;
+export default memo(ControlPanel);

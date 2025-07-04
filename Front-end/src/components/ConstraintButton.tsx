@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useFutoshikiStore } from "../store/futoshikiStore";
 
 interface ConstraintButtonProps {
@@ -47,4 +47,4 @@ const ConstraintButton: React.FC<ConstraintButtonProps> = ({
   );
 };
 
-export default ConstraintButton;
+export default memo(ConstraintButton);
