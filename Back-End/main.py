@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 import traceback
@@ -69,6 +69,18 @@ async def solve_problem(problem_data: problem):
                 grid_size=problem_data.GridSize
             )
             solution = solver.solve()
+
+        if solution["solution"] is None:
+            # No solution found, return 422 with steps and other info
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "error": "No solution found for the given constraints.",
+                    "backtracks": solution["backtracks"],
+                    "time_taken": solution["time_taken"],
+                    "steps": solution["steps"]
+                }
+            )
 
         return {
             "message": "Solotion Khedmat Shoma!",

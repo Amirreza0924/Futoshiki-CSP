@@ -32,6 +32,13 @@ class OptimizedSolver:
         solution_found = self._backtrack()
         end_time = time.time()
 
+        # Add final step to steps
+        self.steps.append({
+            "step": "Final Grid",
+            "position": None,
+            "grid": [row[:] for row in self.grid]
+        })
+
         return {
             "solution": self.grid if solution_found else None,
             "backtracks": self.backtrack_count,
