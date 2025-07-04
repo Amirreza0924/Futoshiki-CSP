@@ -5,8 +5,8 @@ import SolutionSteps from "./SolutionSteps";
 const Sidebar: React.FC = () => {
   return (
     <div className='space-y-6'>
-      <Statistics />
       <SolutionSteps />
+      <Statistics />
     </div>
   );
 };

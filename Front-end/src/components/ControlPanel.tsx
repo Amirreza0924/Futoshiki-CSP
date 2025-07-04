@@ -1,6 +1,7 @@
 import React from "react";
 import { RotateCcw, Brain } from "lucide-react";
 import { useFutoshikiStore } from "../store/futoshikiStore";
+import { useTimelineStore } from "../store";
 
 interface ControlPanelProps {
   onSolvePuzzle: () => void;
@@ -17,6 +18,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ onSolvePuzzle }) => {
     resetPuzzle,
   } = useFutoshikiStore();
 
+  const { reset } = useTimelineStore();
   return (
     <div className='max-w-4xl mx-auto mb-8'>
       <div className='bg-white rounded-2xl shadow-lg md:p-6 p-4 border border-gray-100'>
@@ -32,6 +34,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ onSolvePuzzle }) => {
                   onChange={(e) => setGridSize(parseInt(e.target.value))}
                   disabled={currentStep !== "setup"}
                 >
+                  <option value={3}>3×3 Grid</option>
                   <option value={4}>4×4 Grid</option>
                   <option value={5}>5×5 Grid</option>
                   <option value={6}>6×6 Grid</option>
@@ -61,7 +64,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ onSolvePuzzle }) => {
           {/* Reset and Solve Buttons */}
           <div className='flex items-center justify-around md:justify-center gap-x-4 w-full'>
             <button
-              onClick={resetPuzzle}
+              onClick={() => {
+                resetPuzzle();
+                reset();
+              }}
               className='flex items-center gap-2 px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors'
             >
               <RotateCcw size={16} />

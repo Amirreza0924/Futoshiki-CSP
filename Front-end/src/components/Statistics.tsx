@@ -7,8 +7,6 @@ const Statistics: React.FC = () => {
 
   if (currentStep !== "solved") return null;
 
-  console.log(solutionData);
-
   return (
     <div className='bg-white rounded-2xl shadow-lg p-6 border border-gray-100'>
       <h3 className='text-lg font-semibold mb-4 flex items-center gap-2'>

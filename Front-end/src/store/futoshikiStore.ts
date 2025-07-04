@@ -18,7 +18,7 @@ export interface SolutionStep {
 export interface SolutionData {
   solution: number[][];
   backtracks: number;
-  time_taken: number;
+  time_taken: number; // in ms
   steps: SolutionStep[];
 }
 
@@ -181,15 +181,15 @@ export const useFutoshikiStore = create<FutoshikiState>((set, get) => ({
 
   setSolution: (solution: number[][]) => set({ solution }),
   setSolutionData: (data: SolutionData) => {
-    set({ 
+    set({
       solutionData: data,
-      solution: data.solution
+      solution: data.solution,
     });
   },
   setApiResponse: (response: ApiResponse) => {
-    set({ 
+    set({
       solutionData: response.solution,
-      solution: response.solution.solution
+      solution: response.solution.solution,
     });
   },
   setCurrentStep: (step: CurrentStep) => set({ currentStep: step }),
@@ -200,5 +200,8 @@ export const useFutoshikiStore = create<FutoshikiState>((set, get) => ({
   resetPuzzle: () => {
     const { gridSize } = get();
     get().initializeGrid(gridSize);
+
+    // Reset the current step to setup
+    set({ currentStep: "setup" });
   },
 }));
