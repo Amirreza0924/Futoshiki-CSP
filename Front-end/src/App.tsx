@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import ControlPanel from "./components/ControlPanel";
 import PuzzleGrid from "./components/PuzzleGrid";
 import Sidebar from "./components/Sidebar";
+import { Toaster } from "sonner";
 
 const App: React.FC = () => {
   const {
@@ -45,7 +46,6 @@ const App: React.FC = () => {
       }
       setCurrentStep("solved");
     } catch (error) {
-      console.error("Failed to solve puzzle:", error);
       setCurrentStep("setup");
     } finally {
       setIsAnimating(false);
@@ -54,6 +54,8 @@ const App: React.FC = () => {
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative'>
+      <Toaster richColors />
+
       <div className='container mx-auto px-2 md:px-4 py-8'>
         <Header />
         <ControlPanel onSolvePuzzle={handleSolvePuzzle} />
