@@ -1,80 +1,104 @@
-# Futoshiki-CSP
+# Futoshiki Puzzle Solver (CSP)
 
-## Deployment Options
+<div style='display: flex'>
+<p align="center">
+  <a href="https://en.um.ac.ir/" target="_blank">
+    <img src="./assets/FUM-Logo.png" alt="Ferdowsi University of Mashhad Logo" width="100">
+  </a>
+</p>
 
-### 1. Production Deployment (Render, Heroku, etc.)
+> This project was developed as part of the Artificial Intelligence course by Computer Science students at the **Ferdowsi University of Mashhad (FUM)**.
 
-For production deployment on platforms like Render, use the root `Dockerfile`:
+</div>
 
-```sh
-# Build the full-stack application
-docker build -t futoshiki-csp .
-docker run -p 8000:8000 futoshiki-csp
-```
+This is a full-stack web application designed to solve Futoshiki puzzles using Constraint Satisfaction Problem (CSP) techniques. It features a modern frontend built with React and a powerful backend powered by Python and FastAPI. The project is containerized with Docker for easy setup and deployment.
 
-This creates a single container that:
+The backend implements two backtracking algorithms to solve the puzzle: a simple version and an optimized version with constraint propagation (forward checking), allowing for a performance comparison.
 
-- Builds the React frontend as static files
-- Serves the frontend and API from the same FastAPI server
-- API endpoints are available at `/api/*`
-- Frontend is served at `/` with client-side routing support
-- Supports dynamic port assignment via `PORT` environment variable
+## Project Structure
 
-### 2. Development with Docker Compose
+- `Back-End/`: Contains the Python FastAPI source code, including API endpoints and solver logic.
+- `Front-end/`: Contains the React + TypeScript + Vite source code for the user interface.
+- `assets/`: Contains static assets like the university logo.
+- `Dockerfile`: A single, multi-stage Dockerfile that builds the frontend, installs backend dependencies, and creates a single, optimized production image.
+- `docker-compose.yaml`: A simple configuration file to easily build and run the production-like container on your local machine for testing.
 
-For local development with separate frontend and backend services:
+---
 
-```sh
-docker compose up --build
-```
+## Running the Application
 
-This will build and start both services:
+There are two primary ways to run this project: using Docker (recommended for consistency and easy setup) or running the services natively for local development.
 
-- Access the back-end API at [http://localhost:8000](http://localhost:8000)
-- Access the front-end at [http://localhost:5173](http://localhost:5173)
+### Method 1: Docker & Docker Compose (Recommended)
 
-### 3. Development Setup
+This method builds a single, production-ready container that serves both the frontend and the backend. It's the simplest way to run the entire application.
 
-For local development without Docker:
+**Prerequisites:**
 
-**Backend:**
+- Docker and Docker Compose are installed on your system.
 
-```sh
-cd Back-End
-pip install fastapi uvicorn
-uvicorn main:app --reload
-```
+**Instructions:**
 
-**Frontend:**
+1.  Clone the repository.
+2.  Open your terminal in the project's root directory.
+3.  Run the following command:
 
-```sh
-cd Front-end
-npm install
-# Create .env file with: VITE_API_URL=http://127.0.0.1:8000/api
-npm run dev
-```
+    ```sh
+    docker compose up --build
+    ```
 
-### Service Details
+4.  That's it! The application will be available at **[http://localhost:8000](http://localhost:8000)**.
 
-- **Back-End**
-  - Python 3.12 (slim)
-  - FastAPI framework
-  - Production: serves both API and static files
-  - Development: API only on port 8000
-- **Front-End**
-  - Node.js 20.12.2 (slim)
-  - React + TypeScript + Vite
-  - Production: built as static files
-  - Development: dev server on port 5173
+The FastAPI server will handle all API requests (at `/api/...`) and serve the static React application.
 
-### Environment Variables
+### Method 2: Local Development (Without Docker)
 
-- `PORT`: Server port (default: 8000, automatically set by hosting platforms)
-- `VITE_API_URL`: API base URL for frontend (development only)
+This method allows you to run the frontend and backend servers separately, which is useful for development with features like hot-reloading.
 
-### Notes
+**Prerequisites:**
 
-- Both services run as non-root users inside their containers for improved security.
-- The production build serves everything from a single container on one port.
-- API endpoints are prefixed with `/api/` in production to avoid conflicts with frontend routes.
-- All services are connected via the `futoshiki-net` Docker network in development.
+- Python 3.12+ and Pip
+- Node.js 20+ and npm
+
+**Instructions:**
+
+**1. Start the Backend Server:**
+
+- Open a terminal.
+- Navigate to the backend directory: `cd Back-End`
+- Install dependencies: `pip install "fastapi[all]" uvicorn`
+- Start the server: `uvicorn main:app --reload`
+- The backend API will be running on **[http://localhost:8000](http://localhost:8000)**.
+
+**2. Start the Frontend Server:**
+
+- Open a **new terminal**.
+- Navigate to the frontend directory: `cd Front-end`
+- Install dependencies: `npm install`
+- The frontend needs to know where the API is. Create a file named `.env.local` inside the `Front-end` directory and add the following line:
+  ```
+  VITE_API_BASE_URL=http://localhost:8000
+  ```
+- Start the development server: `npm run dev`
+- The frontend will be available at **[http://localhost:5173](http://localhost:5173)** (or another port if 5173 is in use).
+
+## Technology Stack
+
+- **Backend**: Python 3.12, FastAPI, Uvicorn
+- **Frontend**: React, TypeScript, Vite, CSS Modules
+- **Containerization**: Docker, Docker Compose
+
+---
+
+## Authors
+
+This project was developed by:
+
+- **Arman Akhoondi** - _Backend Developer_
+- **Amirreza Abbasian** - _Frontend Developer_
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
