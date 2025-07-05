@@ -15,7 +15,8 @@ export const solvePuzzle = async (
   const { grid, constraints, gridSize, solverType } = params;
 
   try {
-    const response = await axios.post("http://127.0.0.1:8000/solve", {
+    const baseUrl = import.meta.env.VITE_API_URL || "/api";
+    const response = await axios.post(`${baseUrl}/solve`, {
       Grid: grid,
       Constraints: constraints,
       GridSize: gridSize,

@@ -1,35 +1,80 @@
 # Futoshiki-CSP
 
-## Running with Docker
+## Deployment Options
 
-This project provides Dockerfiles for both the Python back-end (FastAPI) and the TypeScript front-end (Vite/React), along with a `docker-compose.yml` for easy orchestration.
+### 1. Production Deployment (Render, Heroku, etc.)
 
-### Requirements
-- Docker and Docker Compose installed
-- No additional environment variables are required by default
+For production deployment on platforms like Render, use the root `Dockerfile`:
 
-### Service Details
-- **Back-End**
-  - Python 3.12 (slim)
-  - Uses Poetry for dependency management
-  - Exposes port **8000** (FastAPI)
-- **Front-End**
-  - Node.js **20.12.2** (slim)
-  - Built with Vite
-  - Exposes port **5173** (Vite preview server)
+```sh
+# Build the full-stack application
+docker build -t futoshiki-csp .
+docker run -p 8000:8000 futoshiki-csp
+```
 
-### Build and Run
-From the project root directory, run:
+This creates a single container that:
 
-\```sh
+- Builds the React frontend as static files
+- Serves the frontend and API from the same FastAPI server
+- API endpoints are available at `/api/*`
+- Frontend is served at `/` with client-side routing support
+- Supports dynamic port assignment via `PORT` environment variable
+
+### 2. Development with Docker Compose
+
+For local development with separate frontend and backend services:
+
+```sh
 docker compose up --build
-\```
+```
 
 This will build and start both services:
+
 - Access the back-end API at [http://localhost:8000](http://localhost:8000)
 - Access the front-end at [http://localhost:5173](http://localhost:5173)
 
+### 3. Development Setup
+
+For local development without Docker:
+
+**Backend:**
+
+```sh
+cd Back-End
+pip install fastapi uvicorn
+uvicorn main:app --reload
+```
+
+**Frontend:**
+
+```sh
+cd Front-end
+npm install
+# Create .env file with: VITE_API_URL=http://127.0.0.1:8000/api
+npm run dev
+```
+
+### Service Details
+
+- **Back-End**
+  - Python 3.12 (slim)
+  - FastAPI framework
+  - Production: serves both API and static files
+  - Development: API only on port 8000
+- **Front-End**
+  - Node.js 20.12.2 (slim)
+  - React + TypeScript + Vite
+  - Production: built as static files
+  - Development: dev server on port 5173
+
+### Environment Variables
+
+- `PORT`: Server port (default: 8000, automatically set by hosting platforms)
+- `VITE_API_URL`: API base URL for frontend (development only)
+
 ### Notes
+
 - Both services run as non-root users inside their containers for improved security.
-- The front-end service depends on the back-end and will wait for it to be available.
-- All services are connected via the `futoshiki-net` Docker network.
+- The production build serves everything from a single container on one port.
+- API endpoints are prefixed with `/api/` in production to avoid conflicts with frontend routes.
+- All services are connected via the `futoshiki-net` Docker network in development.

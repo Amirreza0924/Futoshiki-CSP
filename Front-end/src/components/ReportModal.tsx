@@ -23,8 +23,9 @@ const ReportModal = () => {
 
   useEffect(() => {
     const fetchReport = () => {
+      const baseUrl = import.meta.env.VITE_API_URL || "/api";
       axios
-        .post("http://127.0.0.1:8000/solve-compared", {
+        .post(`${baseUrl}/solve-compared`, {
           Grid: grid,
           Constraints: constraints,
           GridSize: gridSize,
