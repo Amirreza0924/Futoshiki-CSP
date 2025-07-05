@@ -90,7 +90,9 @@ const ReportModal = () => {
             </p>
 
             <h2 className='text-lg font-semibold'>Simple Time</h2>
-            <p className='text-sm text-gray-500'>{report?.simple_time}</p>
+            <p className='text-sm text-gray-500'>
+              {report?.simple_time.toFixed(6)} ms
+            </p>
 
             <h2 className='text-lg font-semibold'>Optimized Time</h2>
             <p className='text-sm text-gray-500'>

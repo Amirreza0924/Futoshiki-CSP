@@ -1,0 +1,57 @@
+# General ignores
+.git
+.gitignore
+.dockerignore
+docker-compose.yaml
+README.md
+LICENSE.md
+
+# IDE and OS specific files
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# Environment files
+.env
+.env.*
+*.env
+
+# Build artifacts and logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Project assets not needed in the image
+assets/
+
+# Python specific ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Python virtual environment
+.venv
+venv/
+env/
+
+# Frontend specific ignores
+# Ignore node_modules in the Front-end directory. We will run `npm ci` inside the container.
+Front-end/node_modules
+
+# Ignore the local build output. We build this inside the container.
+Front-end/dist
+
+# Ignore frontend environment files
+Front-end/.env
+Front-end/.env.*
+
+# Backend specific ignores
+# Ignore python cache in the Back-end directory
+Back-End/__pycache__/
