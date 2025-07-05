@@ -1,12 +1,12 @@
-ARG NODE_VERSION=22.13.1
+ARG NODE_VERSION=20.12.2
 
 # --- Builder stage ---
 FROM node:${NODE_VERSION}-slim AS builder
 WORKDIR /app
 
-# Install dependencies (npm install as fallback for problematic npm ci)
+# Install dependencies
 COPY --link package.json package-lock.json ./
-RUN npm install
+RUN npm config set strict-ssl false && npm ci --production=false
 
 # Copy the rest of the app source
 COPY --link . .
@@ -26,7 +26,7 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./
 
 # Install only vite for preview
-RUN npm install vite
+RUN npm config set strict-ssl false && npm install vite
 
 ENV NODE_ENV=production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
