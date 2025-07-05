@@ -1,15 +1,8 @@
 # Futoshiki Puzzle Solver (CSP)
 
-<div style='display: flex'>
-<p align="center">
-  <a href="https://en.um.ac.ir/" target="_blank">
-    <img src="./assets/FUM-Logo.png" alt="Ferdowsi University of Mashhad Logo" width="100">
-  </a>
-</p>
-
-> This project was developed as part of the Artificial Intelligence course by Computer Science students at the **Ferdowsi University of Mashhad (FUM)**.
-
-</div>
+| | |
+| :---: | --- |
+| <a href="https://en.um.ac.ir/" target="_blank"><img src="./assets/FUM-Logo.png" alt="Ferdowsi University of Mashhad Logo" width="100"></a> | This project was developed as part of the Artificial Intelligence course by Computer Science students at the **Ferdowsi University of Mashhad (FUM)**. |
 
 This is a full-stack web application designed to solve Futoshiki puzzles using Constraint Satisfaction Problem (CSP) techniques. It features a modern frontend built with React and a powerful backend powered by Python and FastAPI. The project is containerized with Docker for easy setup and deployment.
 
