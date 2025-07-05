@@ -1,0 +1,31 @@
+services:
+  back-end:
+    build:
+      context: ./Back-End
+      dockerfile: Dockerfile
+    container_name: back-end
+    restart: unless-stopped
+    init: true
+    
+    ports:
+      - "8000:8000"  
+    networks:
+      - futoshiki-net
+
+  front-end:
+    build:
+      context: ./Front-end
+      dockerfile: Dockerfile
+    container_name: front-end
+    restart: unless-stopped
+    init: true
+    ports:
+      - "5173:5173"  
+    networks:
+      - futoshiki-net
+    depends_on:
+      - back-end  
+
+networks:
+  futoshiki-net:
+    driver: bridge
