@@ -1,0 +1,8 @@
+{
+  "app": "futoshiki",
+  "port": 5173,
+  "build": {
+    "location": "germany"
+  },
+  "disks": []
+}
